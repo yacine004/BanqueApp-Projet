@@ -1,0 +1,69 @@
+@startuml Diagramme de Classes - BanqueApp
+
+' Énumérations
+enum TypeCompte {
+  Epargne
+  Courant
+}
+
+enum StatutCompte {
+  Actif
+  Bloque
+}
+
+enum TypeTransaction {
+  Depot
+  Retrait
+}
+
+' Classe Compte
+class Compte {
+  - Id : int
+  - Numero : string
+  - Titulaire : string
+  - TypeCompte : TypeCompte
+  - SoldeActuel : decimal
+  - DateCreation : DateTime
+  - DateDeblocage : DateTime?
+  - Statut : StatutCompte
+  __
+  + GetTotalDepots() : decimal
+  + GetTotalRetraits() : decimal
+  + GetNombreTransactions() : int
+  + GetDerniereTransaction() : DateTime?
+}
+
+' Classe Transaction
+class Transaction {
+  - Id : int
+  - Date : DateTime
+  - Type : TypeTransaction
+  - Montant : decimal
+  - Description : string
+  - CompteId : int
+  __
+  + EstDepot() : bool
+  + EstRetrait() : bool
+}
+
+' Relations
+Compte "1" -- "*" Transaction : possède >
+Compte --> TypeCompte
+Compte --> StatutCompte
+Transaction --> TypeTransaction
+Transaction --> Compte : appartient à >
+
+' Notes
+note right of Compte
+  Un compte bancaire peut être
+  de type Epargne ou Courant.
+  Statut : Actif ou Bloqué
+end note
+
+note left of Transaction
+  Chaque transaction est liée
+  à un seul compte.
+  Type : Dépôt ou Retrait
+end note
+
+@enduml
