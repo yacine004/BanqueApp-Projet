@@ -1,0 +1,173 @@
+@using BanqueApp.Models
+@{
+    ViewData["Title"] = "Détails du compte";
+    var compte = ViewBag.Compte as Compte;
+    var totalDepots = (decimal)ViewBag.TotalDepots;
+    var totalRetraits = (decimal)ViewBag.TotalRetraits;
+    var nombreTransactions = (int)ViewBag.NombreTransactions;
+    var derniereTransactionDate = ViewBag.DerniereTransactionDate as DateTime?;
+    var transactions = ViewBag.Transactions as List<Transaction>;
+    var pageActuelle = (int)ViewBag.PageActuelle;
+    var totalPages = (int)ViewBag.TotalPages;
+    var typeFiltre = ViewBag.TypeFiltre as string;
+    var numero = ViewBag.Numero as string;
+}
+
+<div class="container mt-4">
+    <!-- Bouton retour -->
+    <div class="mb-3">
+        <a asp-controller="Compte" asp-action="Details" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Nouvelle recherche
+        </a>
+    </div>
+
+    <!-- Informations du compte -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">📋 Informations du compte</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Numéro :</strong> @compte?.Numero</p>
+                    <p><strong>Titulaire :</strong> @compte?.Titulaire</p>
+                    <p><strong>Type de compte :</strong> @compte?.TypeCompte</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Solde actuel :</strong> <span class="text-primary fw-bold">@compte?.SoldeActuel.ToString("N2") DH</span></p>
+                    <p><strong>Date de création :</strong> @compte?.DateCreation.ToString("dd/MM/yyyy")</p>
+                    <p>
+                        <strong>Statut :</strong> 
+                        <span class="badge @(compte?.Statut == StatutCompte.Actif ? "bg-success" : "bg-warning")">
+                            @compte?.Statut
+                        </span>
+                    </p>
+                    @if (compte?.DateDeblocage.HasValue == true)
+                    {
+                        <p><strong>Date de déblocage :</strong> @compte.DateDeblocage.Value.ToString("dd/MM/yyyy")</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">📊 Statistiques</h5>
+        </div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <h6 class="text-muted">Total dépôts</h6>
+                        <h4 class="text-success">@totalDepots.ToString("N2") DH</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <h6 class="text-muted">Total retraits</h6>
+                        <h4 class="text-danger">@totalRetraits.ToString("N2") DH</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <h6 class="text-muted">Nombre de transactions</h6>
+                        <h4 class="text-primary">@nombreTransactions</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <h6 class="text-muted">Dernière transaction</h6>
+                        <h4 class="text-dark">@(derniereTransactionDate?.ToString("dd/MM/yyyy") ?? "N/A")</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historique des transactions -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">📜 Historique des transactions</h5>
+        </div>
+        <div class="card-body">
+            <!-- Filtre par type -->
+            <div class="mb-3">
+                <form asp-controller="Compte" asp-action="Rechercher" method="get" class="row g-2">
+                    <input type="hidden" name="numero" value="@numero" />
+                    <div class="col-auto">
+                        <label class="form-label">Filtrer par type :</label>
+                    </div>
+                    <div class="col-auto">
+                        <select name="typeFiltre" class="form-select" onchange="this.form.submit()">
+                            <option value="" selected="@(string.IsNullOrEmpty(typeFiltre) ? "selected" : null)">Tous</option>
+                            <option value="Depot" selected="@(typeFiltre == "Depot" ? "selected" : null)">Dépôts uniquement</option>
+                            <option value="Retrait" selected="@(typeFiltre == "Retrait" ? "selected" : null)">Retraits uniquement</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tableau des transactions -->
+            @if (transactions != null && transactions.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th class="text-end">Montant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var transaction in transactions)
+                            {
+                                <tr>
+                                    <td>@transaction.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>
+                                        <span class="badge @(transaction.Type == TypeTransaction.Depot ? "bg-success" : "bg-danger")">
+                                            @transaction.Type
+                                        </span>
+                                    </td>
+                                    <td>@transaction.Description</td>
+                                    <td class="text-end">
+                                        <span class="@(transaction.Type == TypeTransaction.Depot ? "text-success" : "text-danger") fw-bold">
+                                            @(transaction.Type == TypeTransaction.Depot ? "+" : "-")@transaction.Montant.ToString("N2") DH
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                @if (totalPages > 1)
+                {
+                    <nav aria-label="Pagination des transactions">
+                        <ul class="pagination justify-content-center">
+                            @for (int i = 1; i <= totalPages; i++)
+                            {
+                                <li class="page-item @(i == pageActuelle ? "active" : "")">
+                                    <a class="page-link" 
+                                       href="@Url.Action("Rechercher", "Compte", new { numero = numero, page = i, typeFiltre = typeFiltre })">
+                                        @i
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    Aucune transaction trouvée avec les critères de filtre sélectionnés.
+                </div>
+            }
+        </div>
+    </div>
+</div>

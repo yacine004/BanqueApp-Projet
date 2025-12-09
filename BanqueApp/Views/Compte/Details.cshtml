@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Recherche de compte";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">🔍 Recherche de compte bancaire</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Compte" asp-action="Rechercher" method="get">
+                        <div class="mb-3">
+                            <label for="numero" class="form-label">Numéro de compte</label>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="numero" 
+                                   name="numero" 
+                                   placeholder="Saisir le numéro du compte (ex: CPT001)" 
+                                   required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-search"></i> Rechercher
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="alert alert-info mt-4" role="alert">
+                <strong>💡 Comptes disponibles pour test :</strong>
+                <ul class="mb-0 mt-2">
+                    <li>CPT001</li>
+                    <li>CPT002</li>
+                    <li>CPT003</li>
+                    <li>CPT004</li>
+                    <li>CPT005</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
