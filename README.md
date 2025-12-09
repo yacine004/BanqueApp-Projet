@@ -2,11 +2,10 @@
 
 ## 👨‍🎓 Informations Projet
 
-**Réalisé par** : [Votre Nom]  
-**Classe** : [Votre Classe]  
+**Réalisé par** : BA Ndèye Yacine
+**Classe** : L3 - GLRS B
 **Date** : Décembre 2025  
-**Enseignant** : [Nom du Professeur]
-
+**Enseignant** : Mr BAILA WANE
 ---
 
 ## 📋 Livrables du Projet
@@ -114,10 +113,9 @@ ProjetBanque/
 
 ## 📧 Contact
 
-**Étudiant** : [Votre Nom]  
-**Email** : [votre.email@example.com]  
-**GitHub** : [votre-username]
-
+**Étudiant** : BA Ndèye Yacine 
+**Email** : yacineba042@gmail.com  
+**GitHub** : yacine004
 ---
 
 ## 📝 Notes pour le Professeur
@@ -162,5 +160,5 @@ Pour toute question, n'hésitez pas à me contacter.
 
 ---
 
-**Date de soumission** : [Date]  
-**Repository GitHub** : [URL]
+**Date de soumission** : 09/12/2025
+**Repository GitHub** : 
