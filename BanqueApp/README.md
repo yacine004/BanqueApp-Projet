@@ -2,10 +2,10 @@
 
 ## 👨‍🎓 Projet Académique
 
-**Réalisé par** : [Votre Nom]  
-**Classe** : [Votre Classe]  
+**Réalisé par** : BA Ndèye Yacine 
+**Classe** : L3 - GLRS B  
 **Date** : Décembre 2025  
-**Enseignant** : [Nom du Professeur]
+**Enseignant** : Mr BAILA WANE
 
 ---
 
@@ -500,5 +500,6 @@ Projet créé avec GitHub Copilot - ASP.NET Core MVC
 ## 📄 Licence
 
 Projet éducatif - Libre d'utilisation
-#   B a n q u e A p p - P r o j e t  
+#   B a n q u e A p p - P r o j e t 
+ 
  
