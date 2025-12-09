@@ -3,6 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Fichiers de guide et instructions (à ne pas montrer au professeur)
+GUIDE_GITHUB.md
+Documentation/GUIDE_COMPLET_VISUELS.md
+Documentation/INSTRUCTIONS_MAQUETTES.md
+Documentation/diagramme-classes.puml
+out/
+
 # User-specific files
 *.rsuser
 *.suo
